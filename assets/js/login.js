@@ -43,9 +43,16 @@ $(function () {
 function register() {
     $('#reg').on('submit', (e) => {
         e.preventDefault();
-        let regStr = $('#reg').serialize();
+        // let regStr = $('#reg').serialize();
+        let username = $('.reg-box [name = username]').val();
+        let password = $('.reg-box [name = password]').val();
+        // console.log(username);
+        // console.log(password);
         // console.log(regStr);
-        $.post('http://ajax.frontend.itheima.net/api/reguser', regStr, (res) => {
+        $.post('http://ajax.frontend.itheima.net/api/reguser', {
+            username: username,
+            password: password
+        }, (res) => {
             if (res.status !== 0) {
                 return layui.layer.msg(res.message);
             } else {
@@ -53,8 +60,8 @@ function register() {
                 layui.layer.msg(res.message);
                 // 跳转到登录页面
                 $('#link_login').click();
-                // $('.login-box [name = username]').val();
-                // $('.login-box [name = password]').val();
+                $('.login-box [name = username]').val(username);
+                $('.login-box [name = password]').val(password);
             }
         })
     });
@@ -73,7 +80,6 @@ function login() {
                     layui.layer.msg(res.message);
                     location.href = 'index.html';
                 }
-
 
             });
     });
