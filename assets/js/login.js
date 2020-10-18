@@ -49,7 +49,7 @@ function register() {
         // console.log(username);
         // console.log(password);
         // console.log(regStr);
-        $.post('http://ajax.frontend.itheima.net/api/reguser', {
+        $.post('/api/reguser', {
             username: username,
             password: password
         }, (res) => {
@@ -72,12 +72,15 @@ function login() {
     $('#login').on('submit', function (e) {
         e.preventDefault();
         console.log($(this).serialize());
-        $.post('http://ajax.frontend.itheima.net/api/login',
+        $.post('/api/login',
             $(this).serialize(), (res) => {
                 if (res.status !== 0) {
                     layui.layer.msg(res.message);
                 } else {
                     layui.layer.msg(res.message);
+                    // 将获取的token存到本地存储中
+                    localStorage.setItem('token', res.token);
+                    // 跳转到首页
                     location.href = 'index.html';
                 }
 
